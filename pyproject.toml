@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "course7-drf"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "course7_drf"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+generics = "^6.0.0"
+djangorestframework = "^3.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
