@@ -41,6 +41,12 @@ INSTALLED_APPS = [
     'main',
     'rest_framework',
     'users',
+    'django_filters',
+    'rest_framework_simplejwt',
+    'drf_yasg',
+    'django_celery_beat',
+    'corsheaders',
+
 
 ]
 
@@ -156,8 +162,8 @@ REST_FRAMEWORK = {
 
 # Настройки срока действия токенов
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=7200),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -192,3 +198,17 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(minutes=10),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
+
+
+TG_BOT_TOKEN = os.getenv("TG_HABBIT_BOT_TOKEN")
+TG_BOT_ID = 'Eis_Habbit_bot'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    ]
+
+CORS_ALLOW_ALL_ORIGINS = False

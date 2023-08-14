@@ -1,5 +1,4 @@
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
-from telebot import TeleBot
 from django.conf import settings
 from main.models import Habit
 
@@ -18,6 +17,6 @@ def create_habit_schedule(habit):
     PeriodicTask.objects.create(
         crontab=crontab_schedule,
         name=f'Habit Task - {habit.name}',
-        task='habit.tasks.send_telegram_message',
+        task='main.tasks.send_telegram_message',
         args=[habit.id],
     )
