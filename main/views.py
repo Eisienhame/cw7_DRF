@@ -6,8 +6,7 @@ from main.models import Habit
 from main.paginators import HabitPagination
 from main.permissions import HabitPermissions
 from main.serializers import HabitSerializers
-from main.services import create_habit_schedule
-
+from main.tasks import send_tg_create_message
 
 class HabitsCreateApiView(generics.CreateAPIView):
     serializer_class = HabitSerializers
@@ -16,10 +15,11 @@ class HabitsCreateApiView(generics.CreateAPIView):
     pagination_class = HabitPagination
 
     def perform_create(self, serializer):
-        """Сохраняет новому объекту владельца и создает задачу"""
+        """Сохраняет новому объекту владельца и отправляет уведмоление в тг о создании"""
         serializer.save(owner=self.request.user)
         habit = serializer.save()
-        create_habit_schedule(habit)
+        send_tg_create_message(habit.id)
+
 
 
 class HabitsListApiView(generics.ListAPIView):

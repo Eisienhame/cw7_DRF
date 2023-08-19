@@ -194,7 +194,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # Настройки для Celery
 CELERY_BEAT_SCHEDULE = {
     'task-name': {
-        'task': 'myapp.tasks.my_task',  # Путь к задаче
+        'task': 'main.tasks.check_habit',  # Путь к задаче
         'schedule': timedelta(minutes=10),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
@@ -202,6 +202,7 @@ CELERY_BEAT_SCHEDULE = {
 
 TG_BOT_TOKEN = os.getenv("TG_HABBIT_BOT_TOKEN")
 TG_BOT_ID = 'Eis_Habbit_bot'
+TG_CHAT_ID = os.getenv("TG_CHAT_ID")
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
