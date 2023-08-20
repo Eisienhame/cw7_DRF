@@ -34,11 +34,11 @@ class HabitsListApiView(generics.ListAPIView):
         if user.is_staff or user.is_superuser or user.role == 'moderators':
             return Habit.objects.all()
         else:
-            queryset = Habit.objects.filter(public=True) | Habit.objects.filter(user=user)
+            queryset = Habit.objects.filter(public=True) | Habit.objects.filter(owner=user)
             return queryset
 
 
-class HabitDetailApiView(generics.RetrieveAPIView):
+class HabitRetrieveApiView(generics.RetrieveAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializers
     permission_classes = [HabitPermissions]
