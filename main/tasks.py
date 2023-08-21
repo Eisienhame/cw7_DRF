@@ -15,7 +15,7 @@ def send_tg_create_message(habit_id):
     habit = Habit.objects.get(id=habit_id)
     bot = telebot.TeleBot(settings.TG_BOT_TOKEN)
     message = f"Создание привычки {habit.name}"
-    bot.send_message(habit.owner.chat_id, message)
+    bot.send_message(habit.owner.tg_chat_id, message)
 
 @shared_task
 def check_habit():
