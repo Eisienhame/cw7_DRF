@@ -12,16 +12,18 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&p-%fsgb=*gs1#-il4=)#1iy*c_t6pw853#0f$&erc&wk_1c(v'
+SECRET_KEY = f'{os.getenv("PYCHARM_SECRET_KEY")}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,7 +90,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cw_7',
+        'NAME': os.getenv('DATABASES_NAME'),
         'USER': 'postgres',
         'PASSWORD': f'{os.getenv("bd_pass")}'
     }
@@ -158,7 +160,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
-#AllowAny IsAuthenticated
+
 
 # Настройки срока действия токенов
 SIMPLE_JWT = {
@@ -176,7 +178,6 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
 ]
 
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -186,8 +187,8 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 # Настройки для Celery
-CELERY_BROKER_URL = 'redis://localhost:6379'  # URL-адрес брокера сообщений, например Redis
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'  # URL-адрес брокера результатов, также Redis
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')  # URL-адрес брокера сообщений, например Redis
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')  # URL-адрес брокера результатов, также Redis
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
@@ -201,7 +202,6 @@ CELERY_BEAT_SCHEDULE = {
 
 
 TG_BOT_TOKEN = os.getenv("TG_HABBIT_BOT_TOKEN")
-TG_BOT_ID = 'Eis_Habbit_bot'
 TG_CHAT_ID = os.getenv("TG_CHAT_ID")
 
 CORS_ALLOWED_ORIGINS = [

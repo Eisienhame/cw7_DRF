@@ -5,6 +5,7 @@ from main.models import Habit
 from users.models import User
 from config.settings import TG_CHAT_ID
 
+
 # Create your tests here.
 class HabitTestcase(APITestCase):
 
@@ -63,7 +64,6 @@ class HabitTestcase(APITestCase):
     #         status.HTTP_204_NO_CONTENT
     #     )
 
-
     def test_habit_list(self):
         response = self.client.get(
             '/habit/'
@@ -93,4 +93,3 @@ class HabitTestcase(APITestCase):
             response.status_code,
             status.HTTP_400_BAD_REQUEST
         )
-

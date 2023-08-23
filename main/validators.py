@@ -3,16 +3,20 @@ from datetime import time
 
 
 def excludeValidator(value):
-    """Исключить одновременный выбор связанной привычки и указания вознаграждения."""
+    """Исключить одновременный выбор связанной привычки
+     и указания вознаграждения."""
     if value.get('connect_habit') and value.get('reward'):
-        raise serializers.ValidationError('Исключён одновременный выбор связанной привычки и указания вознаграждения.')
+        raise serializers.ValidationError('Исключён одновременный выбор связанной привычки'
+                                          ' и указания вознаграждения.')
     if value.get('execution_time') > time(00, 2):
         raise serializers.ValidationError('Время выполнения должно быть не больше 120 секунд.')
     if 'connect_habit' in value and value.get('connect_habit').is_pleasurable:
-        raise serializers.ValidationError('В связанные привычки могут попадать только привычки с признаком приятной '
-                                          'привычки.')
+        raise serializers.ValidationError('В связанные привычки могут попадать только'
+                                          ' привычки с признаком приятной привычки.')
 
     if value.get('connect_habit') and value.get('reward'):
-        raise serializers.ValidationError('У приятной привычки не может быть вознаграждения или связанной привычки.')
+        raise serializers.ValidationError('У приятной привычки'
+                                          ' не может быть вознаграждения или связанной привычки.')
     if value.get('periodic') > 7:
-        raise serializers.ValidationError('Нельзя выполнять привычку реже, чем 1 раз в 7 дней.')
+        raise serializers.ValidationError('Нельзя выполнять'
+                                          ' привычку реже, чем 1 раз в 7 дней.')

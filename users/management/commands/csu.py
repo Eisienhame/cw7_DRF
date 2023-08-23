@@ -3,6 +3,7 @@ from users.models import User
 import os
 from config.settings import TG_CHAT_ID
 
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options):

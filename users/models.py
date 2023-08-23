@@ -17,7 +17,8 @@ class User(AbstractUser):
     phone = models.CharField(max_length=35, verbose_name='Номер телефона', **NULLABLE)
     country = models.CharField(max_length=100, verbose_name='Страна', **NULLABLE)
     avatar = models.ImageField(upload_to='users/', verbose_name='Аватар', **NULLABLE)
-    role = models.CharField(max_length=10, choices=UserGroups.choices, default=UserGroups.USERS, verbose_name='роль', **NULLABLE)
+    role = models.CharField(max_length=10, choices=UserGroups.choices, default=UserGroups.USERS,
+                            verbose_name='роль', **NULLABLE)
     tg_chat_id = models.IntegerField(verbose_name='chat_id телеграм', **NULLABLE)
 
     USERNAME_FIELD = 'email'

@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
@@ -8,6 +7,7 @@ from main.permissions import HabitPermissions
 from main.serializers import HabitSerializers
 from main.tasks import send_tg_create_message
 
+
 class HabitsCreateApiView(generics.CreateAPIView):
     serializer_class = HabitSerializers
     queryset = Habit.objects.all()
@@ -15,11 +15,11 @@ class HabitsCreateApiView(generics.CreateAPIView):
     pagination_class = HabitPagination
 
     def perform_create(self, serializer):
-        """Сохраняет новому объекту владельца и отправляет уведмоление в тг о создании"""
+        """Сохраняет новому объекту владельца
+         и отправляет уведмоление в тг о создании"""
         serializer.save(owner=self.request.user)
         habit = serializer.save()
         send_tg_create_message(habit.id)
-
 
 
 class HabitsListApiView(generics.ListAPIView):
@@ -34,7 +34,8 @@ class HabitsListApiView(generics.ListAPIView):
         if user.is_staff or user.is_superuser or user.role == 'moderators':
             return Habit.objects.all()
         else:
-            queryset = Habit.objects.filter(public=True) | Habit.objects.filter(owner=user)
+            queryset = (Habit.objects.filter(public=True)
+                        | Habit.objects.filter(owner=user))
             return queryset
 
 

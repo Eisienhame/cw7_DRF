@@ -17,6 +17,7 @@ def send_tg_create_message(habit_id):
     message = f"Создание привычки {habit.name}"
     bot.send_message(habit.owner.tg_chat_id, message)
 
+
 @shared_task
 def check_habit():
     token = settings.TG_HABBIT_BOT_TOKEN
@@ -25,8 +26,8 @@ def check_habit():
     users = User.objects.filter(tg_chat_id__isnull=False)
 
     for user in users:
-
-        # Получить все записи привычек, где поле 'время' меньше или равно текущему времени
+        # Получить все записи привычек, где поле 'время'
+        # меньше или равно текущему времени
         habits_to_complete = Habit.objects.filter(time__lte=now, user=user)
 
         for habit in habits_to_complete:
@@ -51,6 +52,7 @@ def check_habit():
             time_difference = current_time - habit_datetime
 
             # Проверить, наступило ли время выполнения привычки с учетом переодичности
-            if time_difference.total_seconds() >= 0 and time_difference.total_seconds() % interval.total_seconds() == 0:
+            if (time_difference.total_seconds() >= 0 and time_difference.total_seconds()
+                    % interval.total_seconds() == 0):
                 message = f"Пора выполнить привычку: {habit.name}"
                 bot.send_message(user.tg_chat_id, message)

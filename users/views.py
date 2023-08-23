@@ -7,4 +7,3 @@ from users.serializers import UserSerializer
 class UserListApiView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
