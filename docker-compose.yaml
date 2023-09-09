@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: postgres:14-alpine3.17
+    image: postgres
     container_name: db_app
     user: postgres
     env_file:
@@ -18,7 +18,7 @@ services:
       retries: 5
 
   redis:
-    image: redis:7.0.2-alpine
+    image: redis
     container_name: redis_app
     command: redis-server --save 20 1 --loglevel warning
     hostname: redis
