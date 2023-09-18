@@ -26,9 +26,9 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = f'{os.getenv("PYCHARM_SECRET_KEY")}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -90,10 +90,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASES_NAME'),
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'mysecretpassword',
-        'HOST': 'db'
+        'HOST': 'db',
+        'PORT': '5432'
     }
 }
 

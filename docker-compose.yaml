@@ -3,14 +3,19 @@ version: "3"
 services:
   db:
     image: postgres
-    container_name: db_app
+    container_name: db
     user: postgres
     env_file:
       - ./.env
     volumes:
-      - ./var/lib/postgresql/data
+      - /var/lib/postgresql/data
     ports:
       - "5432:5432"
+#    environment:
+#      -   POSTGRES_USER:  postgres
+#        -   POSTGRES_DB:  postgres
+#          -   POSTGRES_PASSWORD:  12345678
+#             -   POSTGRES_HOST:  db
     healthcheck:
       test: [ 'CMD-SHELL', 'pg_isready' ]
       interval: 10s
@@ -31,7 +36,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    network_mode: host
     image: app
     container_name: app_container
     depends_on:
@@ -45,13 +49,15 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    command: python manage.py runserver 127.0.0.1:8000
+    command: bash -C "
+      python manage.py makemigrations
+      &&  python manage.py migrate
+      &&  python manage.py runserver 127.0.0.1:8000"
 
   celery_worker:
     build:
       context: .
     container_name: 'celery_worker'
-    network_mode: host
     image: app
     command: celery -A config worker -l INFO
     volumes:
@@ -61,7 +67,6 @@ services:
     build:
       context: .
     container_name: 'celery_beat'
-    network_mode: host
     image: app
     command: celery -A config beat -l INFO
     volumes:
