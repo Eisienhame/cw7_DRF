@@ -11,11 +11,11 @@ services:
       - /var/lib/postgresql/data
     ports:
       - "5432:5432"
-#    environment:
-#      -   POSTGRES_USER:  postgres
-#        -   POSTGRES_DB:  postgres
-#          -   POSTGRES_PASSWORD:  12345678
-#             -   POSTGRES_HOST:  db
+    environment:
+      -   POSTGRES_USER:  postgres
+      -   POSTGRES_DB:  postgres
+      -   POSTGRES_PASSWORD:  12345678
+      -   POSTGRES_HOST:  db
     healthcheck:
       test: [ 'CMD-SHELL', 'pg_isready' ]
       interval: 10s
